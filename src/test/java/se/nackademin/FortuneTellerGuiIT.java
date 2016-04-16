@@ -91,6 +91,8 @@ public class FortuneTellerGuiIT {
         window.optionPane().button().click();
     }
     
+
+
     private FrameFixture window;
 
 

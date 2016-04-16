@@ -55,4 +55,61 @@ public class FortuneTellerIT {
         fortuneTeller.setLocation(null);
         fortuneTeller.setName("a");
                 }
-}
+        // Testing bugs found in acceptance tests
+        // Issue #37:  Svante/-10000/Malmö/27/0 ger ArrayIndexOutOfBoundsException
+    public void testIssue37(){
+        FortuneTeller fortuneTeller = new FortuneTeller(new MagicNumbers(), new Translator());
+        fortuneTeller.setName("Svante");
+        fortuneTeller.setIncome("-1000");
+        fortuneTeller.setLocation("Malmö");
+        fortuneTeller.setAge("27");
+        fortuneTeller.setHeight("0");
+        boolean result = fortuneTeller.calculate().length()>1;
+        assertEquals("should work with no error message",true,result);
+    }
+            // Issue #38: Svante/10000/Malmö/27/0 ger ArrayIndexOutOfBoundsException
+    public void testIssue38(){
+        FortuneTeller fortuneTeller = new FortuneTeller(new MagicNumbers(), new Translator());
+        fortuneTeller.setName("Svante");
+        fortuneTeller.setIncome("10000");
+        fortuneTeller.setLocation("Malmö");
+        fortuneTeller.setAge("27");
+        fortuneTeller.setHeight("0");
+        boolean result = fortuneTeller.calculate().length()>1;
+        assertEquals("should work with no error message",true,result);
+    }
+                // Issue #39: Svante/10000/Malmö/-5/165 ger ArrayIndexOutOfBoundsException
+    public void testIssue39(){
+        FortuneTeller fortuneTeller = new FortuneTeller(new MagicNumbers(), new Translator());
+        fortuneTeller.setName("Svante");
+        fortuneTeller.setIncome("10000");
+        fortuneTeller.setLocation("Malmö");
+        fortuneTeller.setAge("-5");
+        fortuneTeller.setHeight("165");
+        boolean result = fortuneTeller.calculate().length()>1;
+        assertEquals("should work with no error message",true,result);
+    }
+                    // Issue #40: Svante/10000/Malmö/27/-20 ger ArrayIndexOutOfBoundsException
+    public void testIssue40(){
+        FortuneTeller fortuneTeller = new FortuneTeller(new MagicNumbers(), new Translator());
+        fortuneTeller.setName("Svante");
+        fortuneTeller.setIncome("10000");
+        fortuneTeller.setLocation("Malmö");
+        fortuneTeller.setAge("27");
+        fortuneTeller.setHeight("-20");
+        boolean result = fortuneTeller.calculate().length()>1;
+        assertEquals("should work with no error message",true,result);
+    }
+                        //Issue #41: Svante/0/Malmö/27/165 ger ArrayIndexOutOfBoundsException
+    public void testIssue41(){
+        FortuneTeller fortuneTeller = new FortuneTeller(new MagicNumbers(), new Translator());
+        fortuneTeller.setName("Svante");
+        fortuneTeller.setIncome("0");
+        fortuneTeller.setLocation("Malmö");
+        fortuneTeller.setAge("27");
+        fortuneTeller.setHeight("165");
+        boolean result = fortuneTeller.calculate().length()>1;
+        assertEquals("should work with no error message",true,result);
+    }
+    }
+
