@@ -11,7 +11,6 @@ import org.junit.Test;
 import se.nackademin.gui.FortuneTellerGui;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 
@@ -43,13 +42,58 @@ public class FortuneTellerGuiIT {
         assertThat("error message should contain text 'Invalid income'", errorMessage, containsString("Invalid income"));
         window.optionPane().button().click();
     }
-
+        @Test(timeout = 10000)
+    public void testInvalidName() {
+        window.textBox("nameField").enterText("");
+        window.textBox("incomeField").enterText("1000");
+        window.textBox("locationField").enterText("Hagfors");
+        window.textBox("ageField").enterText("16");
+        window.textBox("heightField").enterText("165");
+        window.button("calculateButton").click();
+        String errorMessage = window.optionPane().label("OptionPane.label").text();
+        assertThat("error message should contain text 'Invalid name'", errorMessage, containsString("Invalid name"));
+        window.optionPane().button().click();
+    }
+        @Test(timeout = 10000)
+    public void testInvalidLocation() {
+        window.textBox("nameField").enterText("Sture Hagfors");
+        window.textBox("incomeField").enterText("1000");
+        window.textBox("locationField").enterText("");
+        window.textBox("ageField").enterText("16");
+        window.textBox("heightField").enterText("165");
+        window.button("calculateButton").click();
+        String errorMessage = window.optionPane().label("OptionPane.label").text();
+        assertThat("error message should contain text 'Invalid location'", errorMessage, containsString("Invalid location"));
+        window.optionPane().button().click();
+    }
+        @Test(timeout = 10000)
+    public void testInvalidAge() {
+        window.textBox("nameField").enterText("Sture Hagfors");
+        window.textBox("incomeField").enterText("1000");
+        window.textBox("locationField").enterText("Hagfors");
+        window.textBox("ageField").enterText("abc");
+        window.textBox("heightField").enterText("165");
+        window.button("calculateButton").click();
+        String errorMessage = window.optionPane().label("OptionPane.label").text();
+        assertThat("error message should contain text 'Invalid age'", errorMessage, containsString("Invalid age"));
+        window.optionPane().button().click();
+    }
+        @Test(timeout = 10000)
+    public void testInvalidHeight() {   
+        window.textBox("nameField").enterText("Sture Hagfors");
+        window.textBox("incomeField").enterText("1000");
+        window.textBox("locationField").enterText("Hagfors");
+        window.textBox("ageField").enterText("16");
+        window.textBox("heightField").enterText("aaaa");
+        window.button("calculateButton").click();
+        String errorMessage = window.optionPane().label("OptionPane.label").text();
+        assertThat("error message should contain text 'Invalid height'", errorMessage, containsString("Invalid height"));
+        window.optionPane().button().click();
+    }
+    
     private FrameFixture window;
 
-    @BeforeClass
-    public static void setUpOnce() {
-        FailOnThreadViolationRepaintManager.install();
-    }
+
 
     @Before
     public void setUp() {
